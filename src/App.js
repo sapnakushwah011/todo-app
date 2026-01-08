@@ -6,7 +6,7 @@ function App() {
   const [editIndex, setEditIndex] = useState(null);
   const [editValue, setEditValue] = useState("");
 
-  const handleAdd = () => {
+  const handleSubmit = () => {
     if (!input.trim()) return;
     setItems([...items, input]);
     setInput("");
@@ -33,19 +33,23 @@ function App() {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center", gap: "10px"}}>
+    <div style={{ backgroundColor: "#f9fafb", display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center", gap: "10px"}}>
       <h1>Todo App</h1>
       <input
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Add todo"
+        style={{ padding: "10px" , borderRadius: "4px", border:"2px solid blue" }}
       />
-      <button onClick={handleAdd}>Add</button>
+      <button 
+        onClick={handleSubmit} 
+        style={{ padding: "6px 10px", borderRadius: "4px", border: "none", backgroundColor: "blue", color: "white" }}
+      >Add</button>
 
-      <ul>
+      <ul style={{ background: "gray", width: "300px", height: "100px", padding: "5px"}}>
         {items.map((item, index) => (
-          <li key={index}>
+          <li key={index} style={{ display: "flex" , justifyContent: "center", alignItems: "center", gap: "10px" }}>
             {editIndex === index ? (
               <>
                 <input
@@ -60,8 +64,14 @@ function App() {
             ) : (
               <>
                 {item}
-                <button onClick={() => handleEdit(index)}>Edit</button>
-                <button onClick={() => handleDelete(index)}>Delete</button>
+                <button 
+                  onClick={() => handleEdit(index)}
+                  style={{ padding: "6px 10px", borderRadius: "4px", border: "none", backgroundColor: "green", color: "white" }}
+                >Edit</button>
+                <button 
+                  onClick={() => handleDelete(index)}
+                  style={{ padding: "6px 10px", borderRadius: "4px", border: "none", backgroundColor: "red", color: "white" }}
+                >Delete</button>
               </>
             )}
           </li>
