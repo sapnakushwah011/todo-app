@@ -33,45 +33,111 @@ function App() {
   };
 
   return (
-    <div style={{ backgroundColor: "#f9fafb", display: "flex", flexDirection:"column", justifyContent: "center", alignItems: "center", gap: "10px"}}>
+    <div
+      style={{
+        backgroundColor: "#f9fafb",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: "10px",
+      }}
+    >
       <h1>Todo App</h1>
       <input
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Add todo"
-        style={{ padding: "10px" , borderRadius: "4px", border:"2px solid blue" }}
+        style={{
+          padding: "10px",
+          borderRadius: "4px",
+          border: "2px solid blue",
+        }}
       />
-      <button 
-        onClick={handleSubmit} 
-        style={{ padding: "6px 10px", borderRadius: "4px", border: "none", backgroundColor: "blue", color: "white" }}
-      >Add</button>
+      <button
+        onClick={handleSubmit}
+        style={{
+          padding: "6px 10px",
+          borderRadius: "4px",
+          border: "none",
+          backgroundColor: "blue",
+          color: "white",
+        }}
+      >
+        Add
+      </button>
 
-      <ul style={{ background: "gray", width: "300px", height: "100px", padding: "5px"}}>
+      <ul
+        style={{
+          background: "gray",
+          width: "300px",
+          height: "100px",
+          padding: "5px",
+        }}
+      >
         {items.map((item, index) => (
-          <li key={index} style={{ display: "flex" , justifyContent: "center", alignItems: "center", gap: "10px" }}>
+          <li
+            key={index}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
             {editIndex === index ? (
               <>
                 <input
                   type="text"
                   value={editValue}
                   onChange={(e) => setEditValue(e.target.value)}
+                  style={{
+                    padding: "10px",
+                    borderRadius: "4px",
+                    border: "2px solid blue",
+                  }}
                 />
-                <button onClick={() => handleSave(index)}>
+                <button
+                  onClick={() => handleSave(index)}
+                  style={{
+                    padding: "6px 10px",
+                    borderRadius: "4px",
+                    border: "none",
+                    backgroundColor: "green",
+                    color: "white",
+                  }}
+                >
                   Save Changes
                 </button>
               </>
             ) : (
               <>
                 {item}
-                <button 
+                <button
                   onClick={() => handleEdit(index)}
-                  style={{ padding: "6px 10px", borderRadius: "4px", border: "none", backgroundColor: "green", color: "white" }}
-                >Edit</button>
-                <button 
+                  style={{
+                    padding: "6px 10px",
+                    borderRadius: "4px",
+                    border: "none",
+                    backgroundColor: "blue",
+                    color: "white",
+                  }}
+                >
+                  Edit
+                </button>
+                <button
                   onClick={() => handleDelete(index)}
-                  style={{ padding: "6px 10px", borderRadius: "4px", border: "none", backgroundColor: "red", color: "white" }}
-                >Delete</button>
+                  style={{
+                    padding: "6px 10px",
+                    borderRadius: "4px",
+                    border: "none",
+                    backgroundColor: "red",
+                    color: "white",
+                  }}
+                >
+                  Delete
+                </button>
               </>
             )}
           </li>
@@ -82,4 +148,3 @@ function App() {
 }
 
 export default App;
-
