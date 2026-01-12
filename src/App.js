@@ -1,149 +1,51 @@
-import { useState } from "react";
+import react, { useState } from "react";
 
 function App() {
-  const [items, setItems] = useState([]);
-  const [input, setInput] = useState([]);
-  const [editIndex, setEditIndex] = useState(null);
-  const [editValue, setEditValue] = useState("");
+  const items = Array.from({ length: 23 }, (_, i) => `Item ${i+1}`)
+  const itemsPerPage = 5;
 
-  const handleSubmit = () => {
-    if (!input.trim()) return;
-    setItems([...items, input]);
-    setInput("");
-  };
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const handleEdit = (index) => {
-    setEditIndex(index);
-    setEditValue(items[index]); // pre-fill input
-  };
+  const TotalPages = Math.ceil(items.length / itemsPerPage);
 
-  const handleSave = (index) => {
-    if (!editValue.trim()) return;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = currentPage * itemsPerPage;
 
-    const updatedItems = [...items];
-    updatedItems[index] = editValue;
-    setItems(updatedItems);
+  const currentItems = items.slice(startIndex, endIndex);
 
-    setEditIndex(null);
-    setEditValue("");
-  };
+  
+  const handlePrev = () => {
+    setCurrentPage(prev => prev - 1);
+  }
 
-  const handleDelete = (index) => {
-    setItems(items.filter((_, i) => i !== index));
-  };
+  const handleNext = () => {
+    setCurrentPage(prev => prev + 1);
+  }
 
   return (
-    <div
-      style={{
-        backgroundColor: "#f9fafb",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "10px",
-      }}
-    >
-      <h1>Todo App</h1>
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="Add todo"
+    <>
+      <div
         style={{
-          padding: "10px",
-          borderRadius: "4px",
-          border: "2px solid blue",
-        }}
-      />
-      <button
-        onClick={handleSubmit}
-        style={{
-          padding: "6px 10px",
-          borderRadius: "4px",
-          border: "none",
-          backgroundColor: "blue",
-          color: "white",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 10,
         }}
       >
-        Add
-      </button>
+        <h1>Pagination</h1>
 
-      <ul
-        style={{
-          background: "gray",
-          width: "300px",
-          height: "100px",
-          padding: "5px",
-        }}
-      >
-        {items.map((item, index) => (
-          <li
-            key={index}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "10px",
-            }}
-          >
-            {editIndex === index ? (
-              <>
-                <input
-                  type="text"
-                  value={editValue}
-                  onChange={(e) => setEditValue(e.target.value)}
-                  style={{
-                    padding: "10px",
-                    borderRadius: "4px",
-                    border: "2px solid blue",
-                  }}
-                />
-                <button
-                  onClick={() => handleSave(index)}
-                  style={{
-                    padding: "6px 10px",
-                    borderRadius: "4px",
-                    border: "none",
-                    backgroundColor: "green",
-                    color: "white",
-                  }}
-                >
-                  Save Changes
-                </button>
-              </>
-            ) : (
-              <>
-                {item}
-                <button
-                  onClick={() => handleEdit(index)}
-                  style={{
-                    padding: "6px 10px",
-                    borderRadius: "4px",
-                    border: "none",
-                    backgroundColor: "blue",
-                    color: "white",
-                  }}
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(index)}
-                  style={{
-                    padding: "6px 10px",
-                    borderRadius: "4px",
-                    border: "none",
-                    backgroundColor: "red",
-                    color: "white",
-                  }}
-                >
-                  Delete
-                </button>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
-    </div>
+        <ul>
+          {currentItems.map((item, index) => {
+            return <li key={index}>{item}</li>
+          })}
+        </ul>
+
+        <button onClick={handlePrev} disabled={currentPage === 1}>Previous</button>
+        Page {currentPage} of {TotalPages}
+        <button onClick={handleNext} disabled={currentPage === TotalPages}>Next</button>
+      </div>
+    </>
   );
 }
 
