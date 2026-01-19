@@ -49,8 +49,6 @@ function App() {
   ];
 
   const handleSelect = (id) => { 
-    if (selectedItem.includes(id)) return;
-    
     if (id === 1 || id > selectedId) {
       setSelectedId(id)
       setSelectedItem(prev => [...prev, id]);
