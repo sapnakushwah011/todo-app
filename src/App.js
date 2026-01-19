@@ -48,19 +48,22 @@ function App() {
     },
   ];
 
-  const handleSelect = (id) => {
-      if (id > selectedId) {
-        setSelectedId(id)
-        setSelectedItem([...selectedItem, id]);
-      }
+  const handleSelect = (id) => { 
+    if (selectedItem.includes(id)) return;
+    
+    if (id === 1 || id > selectedId) {
+      setSelectedId(id)
+      setSelectedItem(prev => [...prev, id]);
+    }
   };
 
   const handleUnselect = () => {
-      for (let i=0; i <selectedItem.length; i++) {
-        let filtered = selectedItem.pop();
-        console.log("filtered", filtered);
-        setSelectedItem(filtered);
-      }
+    for (let i=0; i < selectedItem.length; i++) {
+      let filtered = selectedItem.pop();
+      console.log("filtered", filtered);
+      setSelectedItem(filtered);
+    }
+    setSelectedId("");
   }
 
   useEffect(() => {
@@ -79,7 +82,7 @@ function App() {
             onClick={() => handleSelect(item.id)}
             className="box"
             style={{
-              backgroundColor: selectedItem.includes(item.id)
+              backgroundColor: selectedItem.length > 0 && selectedItem.includes(item.id)
                 ? "green"
                 : "white",
             }}
